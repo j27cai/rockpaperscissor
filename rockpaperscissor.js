@@ -21,3 +21,7 @@ if (Meteor.isServer) {
     // code to run on server at startup
   });
 }
+
+Router.route('/player1');
+
+Router.route('/player2');

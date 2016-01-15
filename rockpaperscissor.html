@@ -5,14 +5,18 @@
 <body>
   <h1>Welcome to Meteor!</h1>
 
-  <input type="radio" value="rock"> Rock<br>
-  <input type="radio" value="paper"> Paper<br>
-  <input type="radio" value="scissor"> Scissor<br>
-
   {{> hello}}
 </body>
 
 <template name="hello">
   <button>Click Me</button>
   <p>You've pressed the button {{counter}} times.</p>
+</template>
+
+<template name="player1">
+  <p>player1</p>
+</template>
+
+<template name="player2">
+  <p>player2</p>
 </template>
