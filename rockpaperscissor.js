@@ -51,28 +51,28 @@ if (Meteor.isClient) {
         message: "Game" + (p1MessageCount+1) + ": Your "+p2+ " tied with "+ p1+ "."
       });
     }
-    else if (winner == 1){ //player2 wins
-      Message.insert({ //player1 wins
+    else if (winner == 1){ //player1 wins
+      Message.insert({ //player2 wins
         name: m1Name,
         player: "1",
-        message: "Game" + (p1MessageCount+1) + ": Your "+p1+ " lost to player2's "+ p2+ " you lose."
+        message: "Game" + (p1MessageCount+1) + ": Your "+p1+ " beat player2's "+ p2+ " you WIN!"
       });
       Message.insert({
         name: m2Name,
         player: "2",
-        message: "Game" + (p1MessageCount+1) + ": Your "+p1+ " beat player2's "+ p2+ " you WIN!"
+        message: "Game" + (p1MessageCount+1) + ": Your "+p2+ " lost to player1's "+ p1+ " you lose."
       });
     }
     else {
-      Message.insert({ //player1 wins
+      Message.insert({
         name: m1Name,
         player: "1",
-        message: "Game" + (p1MessageCount+1) + ": Your "+p1+ " beat player2's "+ p2+ " you WIN!"
+        message: "Game" + (p1MessageCount+1) + ": Your "+p1+ " lost to player2's "+ p2+ " you lose."
       });
       Message.insert({
         name: m2Name,
         player: "2",
-        message: "Game" + (p1MessageCount+1) + ": Your "+p1+ " lost to player2's "+ p2+ " you lose."
+        message: "Game" + (p1MessageCount+1) + ": Your "+p2+ " beat player1's "+ p1+ " you WIN!"
       });
     }
   });
@@ -144,33 +144,41 @@ if (Meteor.isClient) {
 
   Template.player2.events({
     "click button": function (event) {
-      event.preventDefault();
+      if (event.currentTarget.className != "clear"){
+        event.preventDefault();
 
-      var p2Status = Status.findOne({name:"P2Status"});
-      var p2Selection = Selection.findOne({name:"P2Select"});
+        var p2Status = Status.findOne({name:"P2Status"});
+        var p2Selection = Selection.findOne({name:"P2Select"});
 
-      Status.update(p2Status._id, {
-        $set: {selected: true}
-      })
-
-      if (event.currentTarget.className=='rock') {
-        Selection.update(p2Selection._id, {
-          $set: {selection: "rock"}
+        Status.update(p2Status._id, {
+          $set: {selected: true}
         })
-      }
-      else if (event.currentTarget.className=='paper') {
-        Selection.update(p2Selection._id, {
-          $set: {selection: "paper"}
-        })
-      }
-      else{
-        Selection.update(p2Selection._id, {
-          $set: {selection: "scissor"}
-        })
-      }
 
-      //check and see if the other player made a selection then compare/output
-      UI._globalHelpers.result();
+        if (event.currentTarget.className=='rock') {
+          Selection.update(p2Selection._id, {
+            $set: {selection: "rock"}
+          })
+        }
+        else if (event.currentTarget.className=='paper') {
+          Selection.update(p2Selection._id, {
+            $set: {selection: "paper"}
+          })
+        }
+        else{
+          Selection.update(p2Selection._id, {
+            $set: {selection: "scissor"}
+          })
+        }
+
+        //check and see if the other player made a selection then compare/output
+        UI._globalHelpers.result();
+      }
+    }
+  })
+
+  Template.buttons.events({
+    'click .clear': function(event){
+      Meteor.call('removeAllMessages');
     }
   })
 }
@@ -201,6 +209,12 @@ if (Meteor.isServer) {
         });
       }
   });
+
+  Meteor.methods({
+    removeAllMessages: function() {
+      return Message.remove({});
+    }
+  })
 }
 
 Router.route('/player1');

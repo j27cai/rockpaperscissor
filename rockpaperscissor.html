@@ -6,9 +6,7 @@
 
   <h1>Player 1!</h1>
 
-  <button class='rock' name='rock'>Rock</button>
-  <button class='paper' name='paper'>Paper</button>
-  <button class='scissor' name='scissor'>Scissor</button>
+  {{> buttons}}
 
   <ul>
     {{#each message}}
@@ -22,9 +20,7 @@
 
   <h1>Player 2!</h1>
 
-  <button class='rock' name='rock'>Rock</button>
-  <button class='paper' name='paper'>Paper</button>
-  <button class='scissor' name='scissor'>Scissor</button>
+  {{> buttons}}
 
   <ul>
     {{#each message}}
@@ -38,4 +34,11 @@
     <li>
         <div name="message">{{message}}</div>
     </li>
+</template>
+
+<template name="buttons">
+  <button class='rock' name='rock'>Rock</button>
+  <button class='paper' name='paper'>Paper</button>
+  <button class='scissor' name='scissor'>Scissor</button>
+  <button class='clear' name='clear'>Clear History</button>
 </template>
