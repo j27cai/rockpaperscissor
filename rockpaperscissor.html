@@ -1,22 +1,41 @@
-<head>
-  <title>rockpaperscissor</title>
-</head>
+<template name="home">
 
-<body>
-  <h1>Welcome to Meteor!</h1>
-
-  {{> hello}}
-</body>
-
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
 </template>
 
 <template name="player1">
-  <p>player1</p>
+
+  <h1>Player 1!</h1>
+
+  <button class='rock' name='rock'>Rock</button>
+  <button class='paper' name='paper'>Paper</button>
+  <button class='scissor' name='scissor'>Scissor</button>
+
+  <ul>
+    {{#each message}}
+        {{> messageDisplay}}
+    {{/each}}
+  </ul>
+
 </template>
 
 <template name="player2">
-  <p>player2</p>
+
+  <h1>Player 2!</h1>
+
+  <button class='rock' name='rock'>Rock</button>
+  <button class='paper' name='paper'>Paper</button>
+  <button class='scissor' name='scissor'>Scissor</button>
+
+  <ul>
+    {{#each message}}
+        {{> messageDisplay}}
+    {{/each}}
+  </ul>
+
+</template>
+
+<template name="messageDisplay">
+    <li>
+        <div name="message">{{message}}</div>
+    </li>
 </template>
